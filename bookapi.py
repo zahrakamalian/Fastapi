@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Query
 from typing import List, Optional, Dict
-
+from pydantic import BaseModel, Field
 
 app = FastAPI(title="Book Search API")
 
@@ -58,6 +58,11 @@ books_db = [
     {"title": "Essentialism: The Disciplined Pursuit of Less", "author": "Greg McKeown", "publisher": "Crown Business", "year": "2014"},
 ]
 
+class Book(BaseModel):
+    title: str
+    author: str
+    publisher: str
+    year:str = Field(description="first published year")
 
 
 @app.get("/books/search", response_model=List[Dict[str, str]])
